@@ -38,6 +38,88 @@
   <button class="reset" id="reset">Reset score</button>
   <p class="hint">Keyboard: R, P or S</p>
 </main>
+<script>
+(function(){
+  var EMOJI = {rock:"✊", paper:"✋", scissors:"✌️"};
+  var BEATS = {rock:"scissors", paper:"rock", scissors:"paper"};
+  var NAMES = {rock:"Rock", paper:"Paper", scissors:"Scissors"};
+  var score = {you:0, tie:0, cpu:0};
+  var busy = false;
+ 
+  var $ = function(id){return document.getElementById(id)};
+  var arena=$("arena"), youHand=$("youHand"), cpuHand=$("cpuHand"), result=$("result");
+  var buttons = document.querySelectorAll(".choice");
+ 
+  function setBusy(b){
+    busy = b;
+    buttons.forEach(function(btn){btn.disabled = b});
+  }
+ 
+  function play(pick){
+    if(busy) return;
+    setBusy(true);
+    var keys = Object.keys(BEATS);
+    var cpu = keys[Math.floor(Math.random()*keys.length)];
+ 
+    result.className = "result";
+    result.textContent = "Rock… paper… scissors…";
+    youHand.textContent = EMOJI.rock;
+    cpuHand.textContent = EMOJI.rock;
+    arena.classList.add("shaking");
+ 
+    setTimeout(function(){
+      arena.classList.remove("shaking");
+      youHand.textContent = EMOJI[pick];
+      cpuHand.textContent = EMOJI[cpu];
+ 
+      var cls, msg, detail;
+      if(pick === cpu){
+        score.tie++; cls = ""; msg = "It’s a tie";
+        detail = "You both chose " + NAMES[pick].toLowerCase() + ".";
+      } else if(BEATS[pick] === cpu){
+        score.you++; cls = "win"; msg = "You win!";
+        detail = NAMES[pick] + " beats " + NAMES[cpu].toLowerCase() + ".";
+      } else {
+        score.cpu++; cls = "lose"; msg = "Computer wins";
+        detail = NAMES[cpu] + " beats " + NAMES[pick].toLowerCase() + ".";
+      }
+      result.className = "result " + cls;
+      result.innerHTML = "";
+      result.appendChild(document.createTextNode(msg));
+      var s = document.createElement("small");
+      s.textContent = detail;
+      result.appendChild(s);
+ 
+      $("sYou").textContent = score.you;
+      $("sTie").textContent = score.tie;
+      $("sCpu").textContent = score.cpu;
+      setBusy(false);
+    }, 900);
+  }
+ 
+  buttons.forEach(function(btn){
+    btn.addEventListener("click", function(){play(btn.dataset.pick)});
+  });
+ 
+  document.addEventListener("keydown", function(e){
+    if(e.ctrlKey || e.metaKey || e.altKey) return;
+    var k = e.key.toLowerCase();
+    if(k==="r") play("rock");
+    else if(k==="p") play("paper");
+    else if(k==="s") play("scissors");
+  });
+ 
+  $("reset").addEventListener("click", function(){
+    if(busy) return;
+    score = {you:0, tie:0, cpu:0};
+    ["sYou","sTie","sCpu"].forEach(function(id){$(id).textContent = "0"});
+    youHand.textContent = EMOJI.rock;
+    cpuHand.textContent = EMOJI.rock;
+    result.className = "result";
+    result.textContent = "Score reset. Choose your move.";
+  });
+})();
+</script>
 
     </body>
 </html>
