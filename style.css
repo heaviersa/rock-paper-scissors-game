@@ -1,0 +1,7 @@
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#E8E4FF; --panel:#FFFFFF; --ink:#241F6B; --muted:#5B5799;
+  --rock:#F7C325; --paper:#38B8A4; --scissors:#EF5A86; --win:#1E9E6A; --lose:#D6335F;
+}
