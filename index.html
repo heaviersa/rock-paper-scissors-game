@@ -9,6 +9,35 @@
 
     </head>
     <body>
-        
+        <main>
+  <header>
+    <h1>Rock Paper Scissors</h1>
+    <p class="sub">Pick one. The computer picks at the same time.</p>
+  </header>
+ 
+  <section class="score" aria-label="Score">
+    <div><b id="sYou">0</b><span>You</span></div>
+    <div><b id="sTie">0</b><span>Ties</span></div>
+    <div><b id="sCpu">0</b><span>Computer</span></div>
+  </section>
+ 
+  <section class="arena" id="arena" aria-live="polite">
+    <div class="side"><div class="hand" id="youHand">✊</div><small>You</small></div>
+    <div class="vs">vs</div>
+    <div class="side mirror"><div class="hand" id="cpuHand">✊</div><small>Computer</small></div>
+  </section>
+ 
+  <p class="result" id="result">Choose your move.</p>
+ 
+  <section class="choices" aria-label="Your choices">
+    <button class="choice" data-pick="rock"><span class="e">✊</span><span class="n">Rock</span></button>
+    <button class="choice" data-pick="paper"><span class="e">✋</span><span class="n">Paper</span></button>
+    <button class="choice" data-pick="scissors"><span class="e">✌️</span><span class="n">Scissors</span></button>
+  </section>
+ 
+  <button class="reset" id="reset">Reset score</button>
+  <p class="hint">Keyboard: R, P or S</p>
+</main>
+
     </body>
 </html>
